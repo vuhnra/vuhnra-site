@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Video Site</title>
+  <title><3</title>
   <style>
     /* Reset */
     * { margin:0; padding:0; box-sizing:border-box; }
 
     html, body {
-      height: 100%;
       width: 100%;
+      height: 100%;
       font-family: sans-serif;
       background: #000;
       overflow: hidden;
@@ -64,7 +64,7 @@
       object-fit: cover; /* fills screen without black bars */
     }
 
-    /* Optional play button to unmute */
+    /* Optional: floating unmute button if autoplay fails */
     #unmuteButton {
       position: absolute;
       bottom: 20px;
@@ -74,7 +74,7 @@
       color: #fff;
       border: 2px solid #fff;
       cursor: pointer;
-      display: none; /* only shows if muted autoplay blocked */
+      display: none; /* only shows if autoplay blocked */
     }
   </style>
 </head>
@@ -88,7 +88,7 @@
 
   <!-- Video container -->
   <div id="videoContainer">
-    <video id="myVideo" autoplay muted loop playsinline preload="auto">
+    <video id="myVideo" autoplay loop playsinline preload="auto">
       <source src="video.mp4" type="video/mp4">
       Your browser does not support HTML5 video.
     </video>
@@ -102,17 +102,21 @@
     const video = document.getElementById('myVideo');
     const unmuteButton = document.getElementById('unmuteButton');
 
-    // Show video after splash click
+    // User clicks splash screen to enter
     enterBtn.addEventListener('click', () => {
       splash.style.display = 'none';
       videoContainer.style.display = 'block';
+
+      // Play video with audio enabled
+      video.muted = false; // unmute
       video.play().catch(() => {
-        // Show unmute button if autoplay blocked
+        // Some mobile browsers still block autoplay with sound
+        // Show unmute button
         unmuteButton.style.display = 'block';
       });
     });
 
-    // Unmute on button click
+    // Extra unmute button for mobile devices where autoplay fails
     unmuteButton.addEventListener('click', () => {
       video.muted = false;
       video.play();
