@@ -1,28 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body{
-margin:0;
-background:black;
-overflow:hidden;
-}
-
-video{
-position:fixed;
-right:0;
-bottom:0;
-min-width:100%;
-min-height:100%;
-object-fit:cover;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Video Site</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+    }
+    video {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+    }
+    #playButton {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,255,0.8);
+      border: none;
+      padding: 1em 2em;
+      font-size: 1.2em;
+      cursor: pointer;
+      display: none; /* will show if video is muted autoplay blocked */
+    }
+  </style>
 </head>
-
 <body>
-<video autoplay muted loop>
-  <source src="video.mp4" type="video/mp4">
-</video>
+
+  <!-- Video element -->
+  <video id="myVideo" autoplay muted loop playsinline preload="auto">
+    <source src="video.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+
+  <!-- Play button for browsers that block autoplay with sound -->
+  <button id="playButton">Play Video with Sound</button>
+
+  <script>
+    const video = document.getElementById('myVideo');
+    const playButton = document.getElementById('playButton');
+
+    // Check if autoplay with sound is blocked
+    video.play().catch(() => {
+      // Show play button if autoplay with sound fails
+      playButton.style.display = 'block';
+    });
+
+    playButton.addEventListener('click', () => {
+      video.muted = false; // Unmute
+      video.play();
+      playButton.style.display = 'none';
+    });
+  </script>
+
 </body>
 </html>
