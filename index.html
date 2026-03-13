@@ -3,56 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><3</title>
+  <title>Video Preview Splash</title>
   <style>
-    /* Reset */
-    * { margin:0; padding:0; box-sizing:border-box; }
-
     html, body {
+      margin: 0;
+      padding: 0;
       width: 100%;
       height: 100%;
-      font-family: sans-serif;
-      background: #000;
       overflow: hidden;
+      background: #000;
+      font-family: sans-serif;
     }
 
-    /* Splash screen */
-    #splash {
+    /* Fullscreen video */
+    #mainVideo {
       position: absolute;
-      top:0; left:0;
-      width: 100%; height: 100%;
-      background: #000 url('poster.jpg') center/cover no-repeat; /* optional preview image */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      color: #fff;
-      z-index: 10;
-    }
-
-    #splash button {
-      padding: 1em 2em;
-      font-size: 1.5em;
-      background: rgba(255,255,255,0.2);
-      border: 2px solid #fff;
-      color: #fff;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    #splash button:hover {
-      background: rgba(255,255,255,0.5);
-    }
-
-    /* Video container */
-    #videoContainer {
-      position: absolute;
-      top:0; left:0;
-      width: 100%; height: 100%;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
       display: none; /* hidden until click */
     }
 
-    #videoContainer video {
+    /* Splash/preview overlay */
+    #splash {
+      position: absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    /* Blurred preview */
+    #splashVideo {
       position: absolute;
       top:50%;
       left:50%;
@@ -61,67 +54,60 @@
       width: auto;
       height: auto;
       transform: translate(-50%, -50%);
-      object-fit: cover; /* fills screen without black bars */
+      object-fit: cover;
+      filter: blur(15px) brightness(0.7); /* blurry + dim for cinematic look */
+      transition: filter 0.5s ease;
     }
 
-    /* Optional: floating unmute button if autoplay fails */
-    #unmuteButton {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      padding: 0.5em 1em;
-      background: rgba(255,255,255,0.2);
+    /* Optional overlay text */
+    #splashText {
       color: #fff;
-      border: 2px solid #fff;
-      cursor: pointer;
-      display: none; /* only shows if autoplay blocked */
+      font-size: 2em;
+      z-index: 20;
+      text-align: center;
+      pointer-events: none;
     }
+
   </style>
 </head>
 <body>
 
-  <!-- Splash screen -->
+  <!-- Splash overlay -->
   <div id="splash">
-    <h1>Welcome</h1>
-    <button id="enterBtn">Click to Enter</button>
-  </div>
-
-  <!-- Video container -->
-  <div id="videoContainer">
-    <video id="myVideo" autoplay loop playsinline preload="auto">
+    <video id="splashVideo" autoplay muted loop playsinline preload="auto">
       <source src="video.mp4" type="video/mp4">
       Your browser does not support HTML5 video.
     </video>
-    <button id="unmuteButton">Unmute</button>
+    <div id="splashText">Click Anywhere to Enter</div>
   </div>
+
+  <!-- Main video -->
+  <video id="mainVideo" autoplay loop playsinline preload="auto">
+    <source src="video.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
 
   <script>
     const splash = document.getElementById('splash');
-    const enterBtn = document.getElementById('enterBtn');
-    const videoContainer = document.getElementById('videoContainer');
-    const video = document.getElementById('myVideo');
-    const unmuteButton = document.getElementById('unmuteButton');
+    const mainVideo = document.getElementById('mainVideo');
+    const splashVideo = document.getElementById('splashVideo');
 
-    // User clicks splash screen to enter
-    enterBtn.addEventListener('click', () => {
+    const startMainVideo = () => {
+      // Hide splash
       splash.style.display = 'none';
-      videoContainer.style.display = 'block';
 
-      // Play video with audio enabled
-      video.muted = false; // unmute
-      video.play().catch(() => {
-        // Some mobile browsers still block autoplay with sound
-        // Show unmute button
-        unmuteButton.style.display = 'block';
-      });
-    });
+      // Show main video
+      mainVideo.style.display = 'block';
+      mainVideo.muted = false; // Unmute audio
+      mainVideo.play();
 
-    // Extra unmute button for mobile devices where autoplay fails
-    unmuteButton.addEventListener('click', () => {
-      video.muted = false;
-      video.play();
-      unmuteButton.style.display = 'none';
-    });
+      // Stop splash video
+      splashVideo.pause();
+    };
+
+    // User can click/tap anywhere on splash
+    splash.addEventListener('click', startMainVideo);
+    splash.addEventListener('touchstart', startMainVideo);
   </script>
 
 </body>
