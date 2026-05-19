@@ -29,46 +29,7 @@
       display: none; /* hidden until click */
     }
 
-    /* Splash/preview overlay */
-    #splash {
-      position: absolute;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      overflow: hidden;
-      z-index: 10;
-    }
-
-    /* Blurred preview */
-    #splashVideo {
-      position: absolute;
-      top:50%;
-      left:50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      transform: translate(-50%, -50%);
-      object-fit: cover;
-      filter: blur(15px) brightness(0.7); /* blurry + dim for cinematic look */
-      transition: filter 0.5s ease;
-    }
-
-    /* Optional overlay text */
-    #splashText {
-      color: #fff;
-      font-size: 2em;
-      z-index: 20;
-      text-align: center;
-      pointer-events: none;
-    }
-
-  </style>
+     </style>
 </head>
 <body>
 
@@ -78,7 +39,7 @@
       <source src="video.mp4" type="video/mp4">
       Your browser does not support HTML5 video.
     </video>
-    <div id="splashText">Click Anywhere to Enter</div>
+    <div id="splashText"></div>
   </div>
 
   <!-- Main video -->
