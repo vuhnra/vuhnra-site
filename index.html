@@ -6,45 +6,71 @@
 <title>vuhnra</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-body {
-  background: black;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
+body{
+  background:black;
+  overflow:hidden;
+  font-family:Arial,sans-serif;
 }
 
-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+video{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-#overlay {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 24px;
-  letter-spacing: 4px;
-  background: rgba(0,0,0,0.15);
-  cursor: pointer;
-  z-index: 10;
-  transition: opacity 1s ease;
+#overlay{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:24px;
+  letter-spacing:4px;
+  cursor:pointer;
+  z-index:10;
+  transition:opacity 1s ease;
 }
 
-.hidden {
-  opacity: 0;
-  pointer-events: none;
+.hidden{
+  opacity:0;
+  pointer-events:none;
+}
+
+#socials{
+  position:fixed;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:30px;
+  opacity:0;
+  transition:opacity 1s ease;
+  z-index:5;
+}
+
+#socials.show{
+  opacity:1;
+}
+
+#socials a{
+  color:white;
+  text-decoration:none;
+  font-size:15px;
+  letter-spacing:2px;
+  opacity:.75;
+}
+
+#socials a:hover{
+  opacity:1;
 }
 </style>
 </head>
@@ -56,17 +82,22 @@ video {
 
 <div id="overlay">click to enter</div>
 
+<div id="socials">
+  <a href="https://discord.gg/YOURINVITE" target="_blank">Discord</a>
+  <a href="https://instagram.com/YOURUSERNAME" target="_blank">Instagram</a>
+</div>
+
 <script>
 const overlay = document.getElementById("overlay");
 const video = document.getElementById("bgVideo");
+const socials = document.getElementById("socials");
 
 video.pause();
 video.currentTime = 0;
 
-overlay.addEventListener("click", async () => {
+overlay.addEventListener("click", () => {
   overlay.classList.add("hidden");
-
-  video.muted = false;
+  socials.classList.add("show");
   video.play();
 });
 </script>
