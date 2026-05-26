@@ -57,36 +57,6 @@ video{
   z-index:5;
 }
 
-#discord-card{
-  position:fixed;
-  top:30px;
-  left:30px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:10px 14px;
-  border-radius:12px;
-  background:rgba(0,0,0,.45);
-  backdrop-filter:blur(8px);
-  color:white;
-  z-index:5;
-}
-
-#discord-avatar{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-}
-
-#discord-name{
-  font-size:14px;
-}
-
-#discord-status{
-  font-size:12px;
-  opacity:.75;
-}
-
 #socials.show{
   opacity:1;
 }
@@ -117,29 +87,20 @@ video{
   <a href="https://instagram.com/YOURUSERNAME" target="_blank">Instagram</a>
 </div>
 
-<div id="discord-card">
-  <img id="discord-avatar" src="" alt="Discord Avatar">
-  <div>
-    <div id="discord-name">loading...</div>
-    <div id="discord-status"></div>
-  </div>
-</div>
+<script>
+const overlay = document.getElementById("overlay");
+const video = document.getElementById("bgVideo");
+const socials = document.getElementById("socials");
 
-<fetch("https://api.lanyard.rest/v1/users/178906698440900608")
-  .then(res => res.json())
-  .then(data => {
-    const user = data.data.discord_user;
-    const status = data.data.discord_status;
+video.pause();
+video.currentTime = 0;
 
-    document.getElementById("discord-avatar").src =
-      `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-
-    document.getElementById("discord-name").innerText =
-      user.username;
-
-    document.getElementById("discord-status").innerText =
-      status;
-  });>
+overlay.addEventListener("click", () => {
+  overlay.classList.add("hidden");
+  socials.classList.add("show");
+  video.play();
+});
+</script>
 
 </body>
 </html>
