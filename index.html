@@ -1,76 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><3</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>vuhnra</title>
+
   <style>
-    html, body {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    html, body {
       width: 100%;
       height: 100%;
-      overflow: hidden;
-      background: #000;
-      font-family: sans-serif;
+      background: black;
     }
 
-    /* Fullscreen video */
-    #mainVideo {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      transform: translate(-50%, -50%);
+    video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       object-fit: cover;
-      display: none; /* hidden until click */
     }
-
-     </style>
+  </style>
 </head>
 <body>
 
-  <!-- Splash overlay -->
-  <div id="splash">
-    <video id="splashVideo" autoplay muted loop playsinline preload="auto">
-      <source src="video.mp4" type="video/mp4">
-      Your browser does not support HTML5 video.
-    </video>
-    <div id="splashText"></div>
-  </div>
-
-  <!-- Main video -->
-  <video id="mainVideo" autoplay loop playsinline preload="auto">
-    <source src="video.mp4" type="video/mp4">
-    Your browser does not support HTML5 video.
+  <video autoplay muted loop playsinline>
+    <source src="YOUR_VIDEO_URL.mp4" type="video/mp4">
   </video>
-
-  <script>
-    const splash = document.getElementById('splash');
-    const mainVideo = document.getElementById('mainVideo');
-    const splashVideo = document.getElementById('splashVideo');
-
-    const startMainVideo = () => {
-      // Hide splash
-      splash.style.display = 'none';
-
-      // Show main video
-      mainVideo.style.display = 'block';
-      mainVideo.muted = false; // Unmute audio
-      mainVideo.play();
-
-      // Stop splash video
-      splashVideo.pause();
-    };
-
-    // User can click/tap anywhere on splash
-    splash.addEventListener('click', startMainVideo);
-    splash.addEventListener('touchstart', startMainVideo);
-  </script>
 
 </body>
 </html>
-
