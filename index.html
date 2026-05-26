@@ -125,20 +125,7 @@ video{
   </div>
 </div>
 
-<script>
-const overlay = document.getElementById("overlay");
-const video = document.getElementById("bgVideo");
-const socials = document.getElementById("socials");
-
-video.pause();
-video.currentTime = 0;
-
-overlay.addEventListener("click", () => {
-  overlay.classList.add("hidden");
-  socials.classList.add("show");
-  video.play();
-});
-</fetch("https://api.lanyard.rest/v1/users/178906698440900608")
+<fetch("https://api.lanyard.rest/v1/users/178906698440900608")
   .then(res => res.json())
   .then(data => {
     const user = data.data.discord_user;
@@ -153,7 +140,6 @@ overlay.addEventListener("click", () => {
     document.getElementById("discord-status").innerText =
       status;
   });>
-  
 
 </body>
 </html>
